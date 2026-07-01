@@ -1,0 +1,14 @@
+torch>=2.1.0
+transformers>=4.36.0
+peft>=0.7.0
+datasets>=2.16.0
+trl>=0.7.10
+accelerate>=0.25.0
+scipy>=1.11.0
+tensorboard>=2.15.0
+huggingface-hub>=0.20.0
+sentencepiece>=0.1.99
+
+# Optional: bitsandbytes for QLoRA (CUDA only, not supported on Mac Silicon)
+# Uncomment for NVIDIA GPU:
+# bitsandbytes>=0.41.0
