@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TechCorp Financial Chat</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Parametres du serveur">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">TC</div>
+          <div>
+            <h1>TechCorp Chat</h1>
+            <p>Assistant financier Phi-3.5</p>
+          </div>
+        </div>
+
+        <section class="panel">
+          <div class="panel-title">
+            <span>Connexion</span>
+            <span id="connectionBadge" class="status status-offline">Deconnecte</span>
+          </div>
+
+          <label for="serverUrl">Serveur</label>
+          <input id="serverUrl" type="url" value="http://localhost:11434" autocomplete="off" />
+
+          <label for="modelName">Modele</label>
+          <input id="modelName" type="text" value="phi3.5" autocomplete="off" />
+
+          <button id="checkConnection" class="button secondary" type="button">
+            Tester la connexion
+          </button>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">
+            <span>Generation</span>
+          </div>
+
+          <label for="temperature">Temperature <output id="temperatureValue">0.7</output></label>
+          <input id="temperature" type="range" min="0" max="1.5" step="0.1" value="0.7" />
+
+          <label for="maxTokens">Tokens max</label>
+          <input id="maxTokens" type="number" min="32" max="2048" step="32" value="512" />
+        </section>
+
+        <section class="panel quick-prompts" aria-label="Prompts rapides">
+          <div class="panel-title">
+            <span>Tests rapides</span>
+          </div>
+          <button type="button" data-prompt="Explique simplement ce qu'est l'EBITDA.">EBITDA</button>
+          <button type="button" data-prompt="Compare une action et une obligation en 5 points.">Action vs obligation</button>
+          <button type="button" data-prompt="Quels indicateurs regarder avant d'investir dans une entreprise ?">Analyse investissement</button>
+        </section>
+
+        <section class="panel conversation-panel" aria-label="Historique des discussions">
+          <div class="panel-title">
+            <span>Historique</span>
+            <button id="newChat" class="small-action" type="button">Nouveau</button>
+          </div>
+          <div id="conversationList" class="conversation-list"></div>
+          <button id="deleteHistory" class="button secondary danger-button" type="button">
+            Supprimer l'historique
+          </button>
+        </section>
+      </aside>
+
+      <section class="chat-area" aria-label="Conversation">
+        <header class="chat-header">
+          <div>
+            <h2>Conversation</h2>
+            <p id="serverHint">Ollama local pret a etre teste.</p>
+          </div>
+          <button id="clearChat" class="icon-button" type="button" aria-label="Effacer la conversation" title="Effacer la conversation">
+            <span aria-hidden="true">x</span>
+          </button>
+        </header>
+
+        <div id="messages" class="messages" aria-live="polite">
+          <article class="message assistant">
+            <div class="avatar" aria-hidden="true">AI</div>
+            <div class="bubble">
+              <p>Bonjour. Posez une question finance, investissement, budget ou economie.</p>
+            </div>
+          </article>
+        </div>
+
+        <form id="chatForm" class="composer">
+          <label class="sr-only" for="messageInput">Message</label>
+          <textarea id="messageInput" rows="1" placeholder="Ecrivez votre message..." required></textarea>
+          <button id="sendButton" class="button primary" type="submit">Envoyer</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
