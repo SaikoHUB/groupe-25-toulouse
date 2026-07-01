@@ -1,0 +1,45 @@
+services:
+  # Serveur d'inference Ollama
+  ollama:
+    image: ollama/ollama:latest
+    container_name: techcorp-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    # --- GPU (optionnel) -------------------------------------------------
+    # Decommente ce bloc si tu as un GPU NVIDIA + nvidia-container-toolkit
+    # (sous Windows : Docker Desktop avec backend WSL2). Sinon, CPU par defaut.
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # Etape d'init : attend le serveur, pull le modele de base, build le modele custom
+  model-init:
+    image: ollama/ollama:latest
+    container_name: techcorp-model-init
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    volumes:
+      - ../../ollama_server/Modelfile:/Modelfile:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      "echo 'Attente du serveur Ollama...';
+       until ollama list >/dev/null 2>&1; do sleep 2; done;
+       echo 'Pull du modele de base phi3.5...';
+       ollama pull phi3.5;
+       echo 'Build du modele phi35-financial...';
+       ollama create phi35-financial -f /Modelfile;
+       echo 'Modele pret :';
+       ollama list"
+    restart: "no"
+
+volumes:
+  ollama_data:
