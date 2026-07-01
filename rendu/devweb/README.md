@@ -25,6 +25,12 @@ http://localhost:5173
 
 Le nom du modele et l'URL du serveur peuvent etre modifies directement dans l'interface si l'equipe INFRA utilise un autre nom ou une autre machine.
 
+## Preuve de fonctionnement
+
+Connexion etablie avec le serveur Ollama (`localhost:11434`, modele `phi3.5`) et echange en temps reel :
+
+![Interface connectee a Ollama](./screenshot-connexion-ollama.png)
+
 ## Fonctionnalites livrees
 
 - Chat temps reel avec streaming des reponses Ollama.
